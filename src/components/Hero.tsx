@@ -1,7 +1,10 @@
 import { ArrowRight, Github, Linkedin, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { usePortfolio } from "@/hooks/usePortfolio";
 
 export const Hero = () => {
+  const { profile } = usePortfolio();
+  
   const scrollToContact = () => {
     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -15,16 +18,15 @@ export const Hero = () => {
             <div className="space-y-2">
               <p className="text-primary font-semibold">Hello, I'm</p>
               <h1 className="text-5xl md:text-6xl font-bold text-foreground">
-                Dasari Manoj
+                {profile?.full_name || "Dasari Manoj"}
               </h1>
               <h2 className="text-2xl md:text-3xl text-muted-foreground">
-                Mechanical Engineer
+                {profile?.title || "Mechanical Engineer"}
               </h2>
             </div>
             
             <p className="text-lg text-muted-foreground leading-relaxed">
-              A passionate and hardworking engineer from PVKK Institute of Technology, 
-              specializing in innovative solutions and eager to contribute to cutting-edge projects.
+              {profile?.bio || "A passionate and hardworking engineer from PVKK Institute of Technology, specializing in innovative solutions and eager to contribute to cutting-edge projects."}
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -38,34 +40,46 @@ export const Hero = () => {
             </div>
 
             <div className="flex gap-4 pt-4">
-              <a
-                href="mailto:dasarimanoj89@gmail.com"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Email"
-              >
-                <Mail className="h-6 w-6" />
-              </a>
-              <a
-                href="tel:9030916371"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="Phone"
-              >
-                <Phone className="h-6 w-6" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-6 w-6" />
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="h-6 w-6" />
-              </a>
+              {profile?.email && (
+                <a
+                  href={`mailto:${profile.email}`}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="Email"
+                >
+                  <Mail className="h-6 w-6" />
+                </a>
+              )}
+              {profile?.phone && (
+                <a
+                  href={`tel:${profile.phone}`}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="Phone"
+                >
+                  <Phone className="h-6 w-6" />
+                </a>
+              )}
+              {profile?.linkedin_url && (
+                <a
+                  href={profile.linkedin_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-6 w-6" />
+                </a>
+              )}
+              {profile?.github_url && (
+                <a
+                  href={profile.github_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                  aria-label="GitHub"
+                >
+                  <Github className="h-6 w-6" />
+                </a>
+              )}
             </div>
           </div>
 
